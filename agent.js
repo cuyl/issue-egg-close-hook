@@ -4,6 +4,7 @@ const fs = require('fs');
 
 module.exports = app => {
   console.log('Starting with start hook and close hook');
+  fs.appendFileSync('close.log', '\n');
   // kill(2) Ctrl-C
   process.once('SIGINT', () => {
     console.log('[' + process.pid + ']---SIGINT---');
@@ -24,7 +25,6 @@ module.exports = app => {
   });
   app.beforeClose(() => {
     console.log('...beforeClose...');
-
     console.log('[' + process.pid + ']---SIGINT---');
     fs.appendFileSync('close.log', '[' + process.pid + '] close \n');
   });
